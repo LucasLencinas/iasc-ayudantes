@@ -1,0 +1,17 @@
+{
+  "name": "servidor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD 3.0",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "express": "^4.13.3",
+    "socket.io": "^1.3.6",
+    "underscore-node": "^0.1.2"
+  }
+}
