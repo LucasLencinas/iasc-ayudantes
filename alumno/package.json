@@ -1,0 +1,16 @@
+{
+  "name": "iasc-expressstub-nodejs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD 3.0",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.6",
+    "socket.io-client": "^1.3.6"
+  }
+}
