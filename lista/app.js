@@ -64,4 +64,9 @@ function agregarComportamientoAlSocketDocente(docente){
     consulta.respuesta = {nombreDocente:docente.nombre,contenido:respuesta.contenido}
     docente.socket.broadcast.emit("respuesta", consulta);
   });
+
+  docente.socket.on('escriborespuesta', function(respuesta){
+    console.log("ya estan respondiendo: " + JSON.stringify(respuesta));
+    docente.socket.broadcast.emit("escriborespuesta", respuesta);
+  });
 }
