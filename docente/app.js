@@ -11,16 +11,16 @@ var socket = io('http://' + ip + ':3000', { query: 'tipo=' + tipo + '&' +
 																										 'nombre=' + nombre});
 
 socket.on('pregunta', function(consulta) {
-	console.log('Hicieron una pregunta: ', JSON.stringify(consulta));
+	console.log('Preguntan: ', JSON.stringify(consulta));
 	setTimeout(function() {
 		//Comienza a escribir respuesta
+		console.log('Escribiendo respuesta');
 		socket.emit('escriborespuesta', { id: consulta.id, contenido: 'escriborespuesta' });
 		setTimeout(function() {
-			console.log('Esta escribiendo una respuesta');
-  	}, 10000);
+			console.log('Enviando respuesta');
+			socket.emit('respuesta', { id: consulta.id, contenido: 'respuesta' });
+  	}, 2000);
 	  //Termina de escribir y envia respuesta
-		socket.emit('respuesta', { id: consulta.id, contenido: 'respuesta' });
-		console.log('Enviando respuesta');
 	}, 500);
 });
 

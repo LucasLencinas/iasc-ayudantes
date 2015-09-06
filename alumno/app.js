@@ -11,15 +11,15 @@ var socket = io('http://' + ip + ':3000', { query: 'tipo=' + tipo + '&' +
 																										 'nombre=' + nombre});
 
 socket.on('pregunta', function(pregunta) {
-	console.log('Hicieron una pregunta: ', JSON.stringify(pregunta))
+	console.log('Preguntan: ', JSON.stringify(pregunta))
 });
 
 socket.on('respuesta', function(consulta) {
-	console.log('Mandaron una respuesta: ', JSON.stringify(consulta));
+	console.log('Responden: ', JSON.stringify(consulta));
 });
 
 console.log(tipo + ': ' + nombre);
 setInterval(function() {
-	socket.emit('pregunta', { contenido: 'llega?' });
 	console.log('Enviando pregunta');
+	socket.emit('pregunta', { contenido: 'llega?' });
 }, 5000);
