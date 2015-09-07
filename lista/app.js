@@ -61,12 +61,27 @@ function agregarComportamientoAlSocketDocente(docente){
     console.log("Responden una pregunta: " + JSON.stringify(respuesta));
 
     var consulta= _.find(consultas, function(unaConsulta){return unaConsulta.id == respuesta.id});
-    consulta.respuesta = {nombreDocente:docente.nombre,contenido:respuesta.contenido}
-    docente.socket.broadcast.emit("respuesta", consulta);
+    if (isEmptyObject(consulta.respuesta)){
+      consulta.respuesta = {nombreDocente:docente.nombre,contenido:respuesta.contenido}
+      docente.socket.broadcast.emit("respuesta", consulta);
+    }
+    else{
+    console.log("Ya respondieron esta pregunta")
+    }
   });
 
   docente.socket.on('escriborespuesta', function(respuesta){
     console.log("ya estan respondiendo: " + JSON.stringify(respuesta));
     docente.socket.broadcast.emit("escriborespuesta", respuesta);
   });
+}
+
+
+function isEmptyObject(obj) {
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      return false;
+    }
+  }
+  return true;
 }
