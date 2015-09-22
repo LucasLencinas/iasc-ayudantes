@@ -5,7 +5,11 @@
 //==http://expressjs.com/4x/api.html
 var app = require('express')();
 var http = require('http').Server(app);
+var Promise = require("bluebird");
 var io = require('socket.io')(http);
+Promise.promisifyAll(io);
+
+
 var _ = require('underscore-node');
 
 http.listen(3000, function(){
@@ -25,6 +29,7 @@ var ultimoIdConsultas = 0;
 var alumnos = [];
 var docentes = [];
 
+
 io.on('connection', function (socket) {
   if(socket.handshake.query.tipo == 'alumno'){
     var alumno = {};
@@ -37,6 +42,7 @@ io.on('connection', function (socket) {
     var docente = {};
     docente.socket = socket;
     docente.nombre = socket.handshake.query.nombre;
+    docente.estaEscribiendo = false;
     console.log("Se conecto el docente: "+ docente.nombre);
     docentes.push(docente);
     agregarComportamientoAlSocketDocente(docente);
@@ -79,6 +85,11 @@ function agregarComportamientoAlSocketDocente(docente){
 
   docente.socket.on('escriborespuesta', function(respuesta){
     console.log("Ya estan respondiendo: " + JSON.stringify(respuesta));
+    var docente = docentes.filter(function (d) {
+  		return d.nombre == respuesta.nombre;
+  	})[0];
+    docente.estaRespondiendo = true;
+
     docente.socket.broadcast.emit("escriborespuesta", respuesta);
   });
 }
